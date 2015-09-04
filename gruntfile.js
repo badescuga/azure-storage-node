@@ -1,3 +1,4 @@
+/* global await */
 //
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 //
@@ -13,6 +14,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+require('babel/register')({
+  optional: ["es7.asyncFunctions"]
+});
+
+var app = require("./tst123");
 
 module.exports = function(grunt) {
   //init stuff
@@ -87,3 +93,5 @@ module.exports = function(grunt) {
   grunt.registerTask('validate', ['jshint', 'validate-package']);
   grunt.registerTask('default', ['validate', 'mochaTest']);
 };
+
+
