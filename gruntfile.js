@@ -18,7 +18,7 @@ require('babel/register')({
   optional: ["es7.asyncFunctions"]
 });
 
-var app = require("./tst123");
+var testAsyncs = require('./examples/samples/tablequerysampleasync.js');
 
 module.exports = function(grunt) {
   //init stuff
