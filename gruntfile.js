@@ -1,4 +1,3 @@
-/* global await */
 //
 // Copyright (c) Microsoft and contributors.  All rights reserved.
 //
@@ -14,15 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-require('babel/register')({
-  optional: ["es7.asyncFunctions"]
-});
+// require('babel/register')({
+//   optional: ["es7.asyncFunctions"]
+// });
 
-var testAsyncs = require('./examples/samples/tablequerysampleasync.js');
+//var testAsyncs = require('./examples/samples/tablequerysampleasync.js');
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
   //init stuff
   grunt.initConfig({
+    traceur: {
+      options: {
+        // traceur options here
+        experimental: true,
+        // module naming options,
+        moduleNaming: {
+          stripPrefix: './',
+          addPrefix: ''
+        },
+        copyRuntime: 'src/compiled'
+      },
+    custom: {
+      files: [{
+        expand: true,
+        cwd: './',
+    src:['!node_modules/**','**'],
+        dest: 'src/compiled'
+      }]
+    }
+
+    },
 
     pkg: grunt.file.readJSON('package.json'),
 
@@ -69,7 +89,7 @@ module.exports = function(grunt) {
 
     // devserver config
     devserver: {
-      server : {},
+      server: {},
       options: {
         'base': 'docs'
       }
@@ -83,6 +103,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-traceur');
   grunt.loadNpmTasks('grunt-jsdoc');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-devserver');
@@ -91,7 +112,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('doc', ['jsdoc', 'devserver']);
   grunt.registerTask('validate', ['jshint', 'validate-package']);
-  grunt.registerTask('default', ['validate', 'mochaTest']);
+  grunt.registerTask('default', ['traceur', 'validate', 'mochaTest']);
 };
 
 
